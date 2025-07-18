@@ -1,10 +1,13 @@
 FROM nginx:alpine
 
-# Copy static files to nginx html directory
-COPY site/ /usr/share/nginx/html/
+# Remove default config and use a basic one
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Expose port 80
-EXPOSE 80
 
-# Start nginx
+COPY site /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+
+
 CMD ["nginx", "-g", "daemon off;"]
+
+EXPOSE 80
